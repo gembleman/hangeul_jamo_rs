@@ -14,7 +14,11 @@ name = "hangeul_jamo"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-pyo3 = { version = "0.27", features = ["extension-module"] }
+pyo3 = "0.27"
+
+[features]
+default = ["extension-module"]
+extension-module = ["pyo3/extension-module"]
 
 [[bench]]
 name = "benchmark"
