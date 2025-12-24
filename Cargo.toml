@@ -5,6 +5,9 @@ edition = "2024"
 authors = ["gembleman"]
 description = "A high-performance Korean Hangul syllable and jamo manipulation library. included Python bindings."
 license = "MIT"
+repository = "https://github.com/gembleman/hangeul_jamo_rs"
+keywords = ["hangul", "korean", "jamo", "unicode"]
+categories = ["text-processing"]
 
 [lib]
 name = "hangeul_jamo"

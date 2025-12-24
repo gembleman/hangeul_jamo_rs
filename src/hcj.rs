@@ -56,7 +56,7 @@ fn next_char(bytes: &[u8], start: usize) -> Option<(usize, char)> {
 ///
 /// # Examples
 /// ```
-/// use hangeul_jamo::core::decompose_hcj;
+/// use hangeul_jamo::hcj::decompose_hcj;
 ///
 /// assert_eq!(decompose_hcj("한글"), "ㅎㅏㄴㄱㅡㄹ");
 /// assert_eq!(decompose_hcj("Hello 한글!"), "Hello ㅎㅏㄴㄱㅡㄹ!");
@@ -96,7 +96,7 @@ pub fn decompose_hcj(text: &str) -> String {
 ///
 /// # Examples
 /// ```
-/// use hangeul_jamo::core::compose_hcj;
+/// use hangeul_jamo::hcj::compose_hcj;
 ///
 /// assert_eq!(compose_hcj("ㅎㅏㄴㄱㅡㄹ"), "한글");
 /// assert_eq!(compose_hcj("Hello ㅎㅏㄴㄱㅡㄹ!"), "Hello 한글!");

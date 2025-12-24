@@ -19,7 +19,7 @@ pub fn is_jamo(ch: char) -> bool {
 ///
 /// # Examples
 /// ```
-/// use hangeul_jamo::core::decompose_jamo;
+/// use hangeul_jamo::jamo::decompose_jamo;
 ///
 /// let result = decompose_jamo("한글");
 /// // Returns text with U+11xx jamo characters
@@ -62,7 +62,7 @@ pub fn decompose_jamo(text: &str) -> String {
 ///
 /// # Examples
 /// ```
-/// use hangeul_jamo::core::compose_jamo;
+/// use hangeul_jamo::jamo::compose_jamo;
 ///
 /// let result = compose_jamo("jamo text");
 /// // Returns text with composed syllables
