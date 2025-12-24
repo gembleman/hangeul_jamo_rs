@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
-    use hangeul_jamo::core::*;
-    use hangeul_jamo::hcj::*;
-    use hangeul_jamo::jamo::*;
+    use hangeul_jamo_rs::core::*;
+    use hangeul_jamo_rs::hcj::*;
+    use hangeul_jamo_rs::jamo::*;
 
     #[test]
     fn test_is_hangul_syllable() {
@@ -99,8 +99,6 @@ mod tests {
 
     #[test]
     fn test_jamo_hcj_conversion() {
-        use hangeul_jamo::core::{hcj_to_jamo, jamo_to_hcj};
-
         // jamo to HCJ
         assert_eq!(jamo_to_hcj('\u{1100}'), 'ㄱ'); // ᄀ -> ㄱ
         assert_eq!(jamo_to_hcj('\u{1161}'), 'ㅏ'); // ᅡ -> ㅏ

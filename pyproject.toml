@@ -18,7 +18,7 @@ classifiers = [
 keywords = ["korean", "hangul", "jamo", "nlp", "korean-language", "rust"]
 
 [project.urls]
-Repository = "https://github.com/gembleman/hangeul-jamo-py"
+Repository = "https://github.com/gembleman/hangeul-jamo-rs"
 
 
 [build-system]
