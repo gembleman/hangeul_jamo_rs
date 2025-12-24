@@ -10,7 +10,7 @@ keywords = ["hangul", "korean", "jamo", "unicode"]
 categories = ["text-processing"]
 
 [lib]
-name = "hangeul_jamo"
+name = "hangeul_jamo_rs"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
