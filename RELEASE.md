@@ -20,7 +20,26 @@ This project uses automated GitHub releases triggered by Git tags.
 
 ### Creating a New Release
 
-#### Step 1: Update Version Numbers
+You have **three options** to create a release:
+
+#### Option 1: GitHub Web UI (Easiest)
+
+1. Go to the [Actions tab](https://github.com/gembleman/hangeul_jamo_rs/actions/workflows/release.yml)
+2. Click "Run workflow" button
+3. Enter the version number (e.g., `0.2.0`)
+4. Optionally check "Mark as pre-release" for beta/RC versions
+5. Click "Run workflow"
+
+The workflow will automatically:
+- Update version numbers (if needed)
+- Create the tag
+- Generate changelog
+- Create GitHub release
+- Build and upload wheels
+
+#### Option 2: Command Line (Recommended for developers)
+
+##### Step 1: Update Version Numbers
 
 Update the version in both files:
 
@@ -36,14 +55,14 @@ version = "0.2.0"  # Update this
 version = "0.2.0"  # Update this
 ```
 
-#### Step 2: Commit Version Changes
+##### Step 2: Commit Version Changes
 
 ```bash
 git add Cargo.toml pyproject.toml
 git commit -m "chore: bump version to 0.2.0"
 ```
 
-#### Step 3: Create and Push Tag
+##### Step 3: Create and Push Tag
 
 ```bash
 # Create an annotated tag
@@ -53,7 +72,7 @@ git tag -a v0.2.0 -m "Release version 0.2.0"
 git push origin v0.2.0
 ```
 
-#### Step 4: Wait for Automation
+##### Step 4: Wait for Automation
 
 The GitHub Actions workflow will automatically:
 1. Create a GitHub release (within ~1 minute)
@@ -83,17 +102,22 @@ git push origin v0.2.0-beta
 
 This will create a release marked as "pre-release" on GitHub.
 
-### Manual Release (Fallback)
+#### Option 3: Manual GitHub Release (Not Recommended)
 
-If you need to create a release manually:
+If you create a release directly from the GitHub Releases page:
 
 1. Go to the [GitHub Releases page](https://github.com/gembleman/hangeul_jamo_rs/releases)
 2. Click "Draft a new release"
-3. Choose or create a tag
-4. Fill in the release details
+3. Create a new tag (e.g., `v0.2.0`)
+4. Manually write the release notes
 5. Click "Publish release"
 
-The wheel build workflow will still trigger automatically.
+**Note**: This method will:
+- ✅ Build and upload wheels automatically
+- ❌ NOT generate changelog automatically
+- ❌ NOT trigger the release.yml workflow
+
+**Recommendation**: Use Option 1 (GitHub Actions UI) or Option 2 (command line) instead.
 
 ### Troubleshooting
 
