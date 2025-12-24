@@ -95,3 +95,51 @@ assert hj.compose_compound(['ㅗ', 'ㅏ']) == 'ㅘ'
 - `hcj_to_jamo(ch, position)` - Convert HCJ to U+11xx jamo (ㄱ → ᄀ)
   - `position`: "lead", "vowel", or "tail"
 
+## Development
+
+### Building from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/gembleman/hangeul_jamo_rs.git
+cd hangeul_jamo_rs
+
+# Build Rust library
+cargo build --release
+
+# Build Python bindings
+pip install maturin
+maturin develop
+```
+
+### Running Tests
+
+```bash
+# Rust tests
+cargo test
+
+# Python tests
+pytest tests/
+```
+
+### Creating a Release
+
+This project uses automated releases triggered by Git tags. See [RELEASE.md](RELEASE.md) for detailed instructions.
+
+Quick version:
+```bash
+# Update version in Cargo.toml and pyproject.toml
+# Commit changes
+git commit -am "chore: bump version to 0.2.0"
+
+# Create and push tag
+git tag -a v0.2.0 -m "Release version 0.2.0"
+git push origin v0.2.0
+```
+
+The GitHub Actions workflow will automatically create a release and build wheels for all platforms.
+
+## License
+
+MIT
+
