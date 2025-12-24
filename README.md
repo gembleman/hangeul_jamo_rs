@@ -121,25 +121,3 @@ cargo test
 # Python tests
 pytest tests/
 ```
-
-### Creating a Release
-
-This project uses automated releases triggered by Git tags. See [RELEASE.md](RELEASE.md) for detailed instructions.
-
-Quick version:
-```bash
-# Update version in Cargo.toml and pyproject.toml
-# Commit changes
-git commit -am "chore: bump version to 0.2.0"
-
-# Create and push tag
-git tag -a v0.2.0 -m "Release version 0.2.0"
-git push origin v0.2.0
-```
-
-The GitHub Actions workflow will automatically create a release and build wheels for all platforms.
-
-## License
-
-MIT
-
