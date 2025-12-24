@@ -27,14 +27,14 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Run Rust tests
+        run: cargo test --no-default-features
+
       - name: Install dependencies and build
         run: |
           uv venv
           uv pip install maturin pytest pytest-benchmark
           uv run maturin develop
-
-      - name: Run Rust tests
-        run: cargo test
 
       - name: Run Python tests
         run: uv run pytest tests/ -v
