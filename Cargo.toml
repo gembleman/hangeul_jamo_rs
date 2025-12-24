@@ -1,0 +1,29 @@
+[package]
+name = "hangeul_jamo_rs"
+version = "0.1.0"
+edition = "2024"
+authors = ["hangeul_jamo_rs contributors"]
+description = "A high-performance Korean Hangul syllable and jamo manipulation library with Rust backend and Python bindings"
+license = "MIT"
+
+[lib]
+name = "hangeul_jamo"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+pyo3 = { version = "0.27", features = ["extension-module"] }
+
+[[bench]]
+name = "benchmark"
+harness = false
+
+[dev-dependencies]
+criterion = "0.8"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+
+[profile.bench]
+inherits = "release"
