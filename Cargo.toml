@@ -2,8 +2,8 @@
 name = "hangeul_jamo_rs"
 version = "0.1.0"
 edition = "2024"
-authors = ["hangeul_jamo_rs contributors"]
-description = "A high-performance Korean Hangul syllable and jamo manipulation library with Rust backend and Python bindings"
+authors = ["gembleman"]
+description = "A high-performance Korean Hangul syllable and jamo manipulation library. included Python bindings."
 license = "MIT"
 
 [lib]
