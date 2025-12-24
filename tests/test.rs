@@ -80,7 +80,7 @@ mod tests {
         // Not jamo
         assert!(!is_jamo('ㄱ')); // HCJ
         assert!(!is_jamo('한')); // Hangul syllable
-        assert!(!is_jamo('a'));  // Latin
+        assert!(!is_jamo('a')); // Latin
     }
 
     #[test]
@@ -92,23 +92,23 @@ mod tests {
 
         // Not HCJ
         assert!(!is_hcj('\u{1100}')); // U+11xx jamo
-        assert!(!is_hcj('한'));        // Hangul syllable
-        assert!(!is_hcj('a'));         // Latin
+        assert!(!is_hcj('한')); // Hangul syllable
+        assert!(!is_hcj('a')); // Latin
         assert!(!is_hcj('\u{3164}')); // Hangul filler (excluded)
     }
 
     #[test]
     fn test_jamo_hcj_conversion() {
-        use hangeul_jamo::core::{jamo_to_hcj, hcj_to_jamo};
+        use hangeul_jamo::core::{hcj_to_jamo, jamo_to_hcj};
 
         // jamo to HCJ
         assert_eq!(jamo_to_hcj('\u{1100}'), 'ㄱ'); // ᄀ -> ㄱ
         assert_eq!(jamo_to_hcj('\u{1161}'), 'ㅏ'); // ᅡ -> ㅏ
 
         // HCJ to jamo
-        assert_eq!(hcj_to_jamo('ㄱ', "lead"), '\u{1100}');   // ㄱ -> ᄀ
+        assert_eq!(hcj_to_jamo('ㄱ', "lead"), '\u{1100}'); // ㄱ -> ᄀ
         assert_eq!(hcj_to_jamo('ㅏ', "vowel"), '\u{1161}'); // ㅏ -> ᅡ
-        assert_eq!(hcj_to_jamo('ㄱ', "tail"), '\u{11A8}');  // ㄱ -> ᆨ
+        assert_eq!(hcj_to_jamo('ㄱ', "tail"), '\u{11A8}'); // ㄱ -> ᆨ
     }
 
     #[test]

@@ -25,22 +25,20 @@ pub const TOTAL_SYLLABLES: usize = NUM_LEAD * NUM_SYLLABLES_PER_LEAD; // 11172
 
 // Leading consonants (초성) in HCJ form
 pub const HCJ_LEADS: [char; 19] = [
-    'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ',
-    'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ',
+    'ㅌ', 'ㅍ', 'ㅎ',
 ];
 
 // Vowels (중성) in HCJ form
 pub const HCJ_VOWELS: [char; 21] = [
-    'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ',
-    'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ',
-    'ㅡ', 'ㅢ', 'ㅣ'
+    'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ',
+    'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ',
 ];
 
 // Trailing consonants (종성) in HCJ form - None represented as '\0'
 pub const HCJ_TAILS: [char; 28] = [
-    '\0', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ',
-    'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ',
-    'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    '\0', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ',
+    'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
 ];
 
 // Compound jamo components (double consonants, clusters, diphthongs)
@@ -51,7 +49,6 @@ pub const COMPOUND_JAMO: &[(&str, &[char])] = &[
     ("ㅃ", &['ㅂ', 'ㅂ']),
     ("ㅆ", &['ㅅ', 'ㅅ']),
     ("ㅉ", &['ㅈ', 'ㅈ']),
-
     // Consonant clusters (자음군)
     ("ㄳ", &['ㄱ', 'ㅅ']),
     ("ㄵ", &['ㄴ', 'ㅈ']),
@@ -64,7 +61,6 @@ pub const COMPOUND_JAMO: &[(&str, &[char])] = &[
     ("ㄿ", &['ㄹ', 'ㅍ']),
     ("ㅀ", &['ㄹ', 'ㅎ']),
     ("ㅄ", &['ㅂ', 'ㅅ']),
-
     // Diphthongs (이중모음)
     ("ㅘ", &['ㅗ', 'ㅏ']),
     ("ㅙ", &['ㅗ', 'ㅐ']),
@@ -120,11 +116,7 @@ pub fn get_lead_index(ch: char) -> Option<usize> {
         return None;
     }
     let idx = LEAD_LOOKUP[(code - 0x3131) as usize];
-    if idx >= 0 {
-        Some(idx as usize)
-    } else {
-        None
-    }
+    if idx >= 0 { Some(idx as usize) } else { None }
 }
 
 // Lookup table for vowel indices
@@ -215,17 +207,33 @@ pub fn get_tail_index(ch: char) -> Option<usize> {
         return None;
     }
     let idx = TAIL_LOOKUP[(code - 0x3131) as usize];
-    if idx >= 0 {
-        Some(idx as usize)
-    } else {
-        None
-    }
+    if idx >= 0 { Some(idx as usize) } else { None }
 }
 
 /// Check if character is a leading consonant
 #[inline]
 pub fn is_lead(ch: char) -> bool {
-    matches!(ch, 'ㄱ' | 'ㄲ' | 'ㄴ' | 'ㄷ' | 'ㄸ' | 'ㄹ' | 'ㅁ' | 'ㅂ' | 'ㅃ' | 'ㅅ' | 'ㅆ' | 'ㅇ' | 'ㅈ' | 'ㅉ' | 'ㅊ' | 'ㅋ' | 'ㅌ' | 'ㅍ' | 'ㅎ')
+    matches!(
+        ch,
+        'ㄱ' | 'ㄲ'
+            | 'ㄴ'
+            | 'ㄷ'
+            | 'ㄸ'
+            | 'ㄹ'
+            | 'ㅁ'
+            | 'ㅂ'
+            | 'ㅃ'
+            | 'ㅅ'
+            | 'ㅆ'
+            | 'ㅇ'
+            | 'ㅈ'
+            | 'ㅉ'
+            | 'ㅊ'
+            | 'ㅋ'
+            | 'ㅌ'
+            | 'ㅍ'
+            | 'ㅎ'
+    )
 }
 
 /// Check if character is a vowel
@@ -238,13 +246,43 @@ pub fn is_vowel(ch: char) -> bool {
 /// Check if character is a trailing consonant
 #[inline]
 pub fn is_tail(ch: char) -> bool {
-    matches!(ch, 'ㄱ' | 'ㄲ' | 'ㄳ' | 'ㄴ' | 'ㄵ' | 'ㄶ' | 'ㄷ' | 'ㄹ' | 'ㄺ' | 'ㄻ' | 'ㄼ' | 'ㄽ' | 'ㄾ' | 'ㄿ' | 'ㅀ' | 'ㅁ' | 'ㅂ' | 'ㅄ' | 'ㅅ' | 'ㅆ' | 'ㅇ' | 'ㅈ' | 'ㅊ' | 'ㅋ' | 'ㅌ' | 'ㅍ' | 'ㅎ')
+    matches!(
+        ch,
+        'ㄱ' | 'ㄲ'
+            | 'ㄳ'
+            | 'ㄴ'
+            | 'ㄵ'
+            | 'ㄶ'
+            | 'ㄷ'
+            | 'ㄹ'
+            | 'ㄺ'
+            | 'ㄻ'
+            | 'ㄼ'
+            | 'ㄽ'
+            | 'ㄾ'
+            | 'ㄿ'
+            | 'ㅀ'
+            | 'ㅁ'
+            | 'ㅂ'
+            | 'ㅄ'
+            | 'ㅅ'
+            | 'ㅆ'
+            | 'ㅇ'
+            | 'ㅈ'
+            | 'ㅊ'
+            | 'ㅋ'
+            | 'ㅌ'
+            | 'ㅍ'
+            | 'ㅎ'
+    )
 }
 
 /// Check if character is a compound jamo
 #[inline]
 pub fn is_compound(ch: char) -> bool {
-    COMPOUND_JAMO.iter().any(|(c, _)| c.chars().next() == Some(ch))
+    COMPOUND_JAMO
+        .iter()
+        .any(|(c, _)| c.chars().next() == Some(ch))
 }
 
 /// Check if a tail consonant can also be used as a leading consonant
@@ -255,5 +293,8 @@ pub fn tail_can_be_lead(tail_idx: usize) -> bool {
     // tail_idx to consonant mapping (from HCJ_TAILS):
     // 1:ㄱ, 2:ㄲ, 4:ㄴ, 7:ㄷ, 8:ㄹ, 16:ㅁ, 17:ㅂ, 19:ㅅ, 20:ㅆ, 21:ㅇ, 22:ㅈ, 23:ㅊ, 24:ㅋ, 25:ㅌ, 26:ㅍ, 27:ㅎ
     // Cluster consonants (ㄳ, ㄵ, ㄶ, ㄺ-ㅀ, ㅄ) cannot be leading consonants
-    matches!(tail_idx, 1 | 2 | 4 | 7 | 8 | 16 | 17 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27)
+    matches!(
+        tail_idx,
+        1 | 2 | 4 | 7 | 8 | 16 | 17 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27
+    )
 }
