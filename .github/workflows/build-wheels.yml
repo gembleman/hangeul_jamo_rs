@@ -1,9 +1,10 @@
-name: Build and Release Wheels
+name: Build Wheels (Manual)
+
+# This workflow is for manually building wheels without creating a release
+# For automatic wheel building with releases, use the "Release" workflow
 
 on:
-  release:
-    types: [created]
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:  # Manual trigger only
 
 permissions:
   contents: write
@@ -34,29 +35,14 @@ jobs:
           args: --release --out dist --find-interpreter
           manylinux: auto
 
-      - name: Upload wheels
+      - name: Upload wheels as artifacts
         uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.os }}
           path: dist
+          retention-days: 7
 
-  upload_release:
-    name: Upload to GitHub Release
-    needs: [build_wheels]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-
-    steps:
-      - name: Download all wheels
-        uses: actions/download-artifact@v4
-        with:
-          pattern: wheels-*
-          merge-multiple: true
-          path: dist
-
-      - name: Upload to Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build complete
+        run: |
+          echo "✅ Wheels built successfully for ${{ matrix.os }}"
+          echo "📦 Download artifacts from the Actions tab"

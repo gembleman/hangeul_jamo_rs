@@ -4,7 +4,7 @@ This document describes how to create a new release for hangeul_jamo_rs.
 
 ## Automated Release Workflow
 
-This project uses automated GitHub releases triggered by Git tags.
+This project uses a unified GitHub Actions workflow that handles both release creation and wheel building in a single process.
 
 ### How It Works
 
@@ -13,10 +13,12 @@ This project uses automated GitHub releases triggered by Git tags.
 2. **Release Creation**: The workflow automatically:
    - Generates a changelog from commit messages
    - Creates a GitHub release with release notes
-   - Triggers the wheel build workflow
-   - Builds and uploads Python wheels for all platforms (Linux, Windows, macOS)
+   - Builds Python wheels for all platforms (Linux, Windows, macOS) **in the same workflow**
+   - Uploads wheels to the GitHub release
 
 3. **Pre-releases**: Tags with suffixes (e.g., `v0.1.0-beta`, `v1.0.0-rc1`) are marked as pre-releases.
+
+4. **All-in-one**: Unlike separate workflows, this unified approach ensures wheels are **always** included in releases without timing or trigger issues.
 
 ### Creating a New Release
 
@@ -75,9 +77,13 @@ git push origin v0.2.0
 ##### Step 4: Wait for Automation
 
 The GitHub Actions workflow will automatically:
-1. Create a GitHub release (within ~1 minute)
-2. Build wheels for all platforms (within ~10-15 minutes)
-3. Upload wheels to the release
+1. Create a GitHub release (~1 minute)
+2. Build wheels for all platforms (~10-15 minutes)
+3. Upload wheels to the release (~1 minute after build)
+
+**Total time**: ~10-17 minutes for complete release with wheels
+
+You can monitor progress at: `https://github.com/gembleman/hangeul_jamo_rs/actions`
 
 ### Commit Message Conventions
 
@@ -102,9 +108,11 @@ git push origin v0.2.0-beta
 
 This will create a release marked as "pre-release" on GitHub.
 
-#### Option 3: Manual GitHub Release (Not Recommended)
+#### Option 3: Manual GitHub Release (⚠️ Not Recommended - No Wheels!)
 
-If you create a release directly from the GitHub Releases page:
+**WARNING**: Creating a release directly from the GitHub Releases page will **NOT** build or upload wheels!
+
+If you still choose this method:
 
 1. Go to the [GitHub Releases page](https://github.com/gembleman/hangeul_jamo_rs/releases)
 2. Click "Draft a new release"
@@ -112,29 +120,47 @@ If you create a release directly from the GitHub Releases page:
 4. Manually write the release notes
 5. Click "Publish release"
 
-**Note**: This method will:
-- ✅ Build and upload wheels automatically
-- ❌ NOT generate changelog automatically
-- ❌ NOT trigger the release.yml workflow
+**What happens**:
+- ❌ **NO wheels will be built or uploaded** (main workflow not triggered)
+- ❌ NO automatic changelog generation
+- ❌ Incomplete release without binary distributions
 
-**Recommendation**: Use Option 1 (GitHub Actions UI) or Option 2 (command line) instead.
+**To fix**: Use the manual "Build Wheels" workflow from Actions tab after creating the release, then manually upload the artifacts.
+
+**Strong Recommendation**: Use **Option 1** (GitHub Actions UI) or **Option 2** (command line) instead for complete releases with wheels.
 
 ### Troubleshooting
 
 **Workflow doesn't trigger:**
-- Ensure the tag matches the pattern `v*.*.*`
+- Ensure the tag matches the pattern `v*.*.*` (must start with 'v')
 - Check that you pushed the tag: `git push origin <tag-name>`
 - Verify workflow permissions in repository settings
+- View workflow runs in [Actions tab](https://github.com/gembleman/hangeul_jamo_rs/actions)
 
 **Build fails:**
 - Check the [Actions tab](https://github.com/gembleman/hangeul_jamo_rs/actions) for error details
-- Ensure all tests pass before creating a tag
+- Ensure all tests pass before creating a tag: `cargo test && pytest tests/`
 - Verify Cargo.toml and pyproject.toml are valid
+- Check that version numbers are updated correctly
 
 **Wheels not uploaded:**
-- The wheel build takes 10-15 minutes across all platforms
-- Check individual job logs in the build-wheels workflow
-- Ensure the release was created successfully first
+- Wait the full ~15 minutes for all platforms to build
+- Check the "build_wheels" job logs for platform-specific errors
+- Ensure the "create-release" job completed successfully first
+- The "upload_release" job depends on both completing
+
+**Release created but no wheels:**
+- If you created the release manually (Option 3), wheels won't be built automatically
+- **Solution**: Delete the release and use Option 1 or 2 to recreate it
+- Or manually run "Build Wheels (Manual)" workflow and upload artifacts
+
+**How to monitor progress:**
+1. Go to [Actions tab](https://github.com/gembleman/hangeul_jamo_rs/actions)
+2. Click on the "Release" workflow run
+3. Monitor these jobs in order:
+   - ✅ create-release (1-2 min)
+   - ⏳ build_wheels (10-15 min, 3 parallel jobs)
+   - ⏳ upload_release (1-2 min)
 
 ### Version Numbering
 
