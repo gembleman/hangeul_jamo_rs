@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
-    use hangeul_jamo_rs::core::*;
-    use hangeul_jamo_rs::hcj::*;
-    use hangeul_jamo_rs::jamo::*;
+    use hangeul_jamo::core::*;
+    use hangeul_jamo::hcj::*;
+    use hangeul_jamo::jamo::*;
 
     #[test]
     fn test_is_hangul_syllable() {

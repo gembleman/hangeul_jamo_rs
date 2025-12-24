@@ -1,5 +1,5 @@
 use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
-use hangeul_jamo_rs::{core::*, hcj::*, jamo::*};
+use hangeul_jamo::{core::*, hcj::*, jamo::*};
 use std::hint::black_box;
 
 fn generate_test_data() -> (String, String, String) {
