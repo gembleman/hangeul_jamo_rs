@@ -16,9 +16,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 keywords = ["korean", "hangul", "jamo", "nlp", "korean-language", "rust"]
-dependencies = [
-    "twine>=6.2.0",
-]
+
 
 [project.urls]
 Repository = "https://github.com/gembleman/hangeul-jamo-rs"
