@@ -323,7 +323,7 @@ fn hcj_to_jamo(ch: &str, position: &str) -> PyResult<String> {
 
 /// A high-performance Korean Hangul syllable and jamo manipulation library
 #[pymodule]
-fn hangeul_jamo(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn hangeul_jamo_rs(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(is_hangul_syllable, m)?)?;
     m.add_function(wrap_pyfunction!(is_jamo, m)?)?;
     m.add_function(wrap_pyfunction!(is_hcj, m)?)?;
