@@ -27,6 +27,7 @@ build-backend = "maturin"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
+module-name = "hangeul_jamo_rs"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
