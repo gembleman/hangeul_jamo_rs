@@ -18,12 +18,6 @@ A high-performance Korean Hangul syllable and jamo manipulation library written 
 hangeul_jamo = "0.1"
 ```
 
-### Python
-
-```bash
-pip install hangeul_jamo
-```
-
 ## Usage
 
 ### Rust
@@ -44,25 +38,6 @@ assert_eq!(compose_jamo(&jamo), "한글");
 use hangeul_jamo::core::{decompose_compound, compose_compound};
 assert_eq!(decompose_compound('ㄲ'), Some(vec!['ㄱ', 'ㄱ']));
 assert_eq!(compose_compound(&['ㄱ', 'ㄱ']), Some('ㄲ'));
-```
-
-### Python
-
-```python
-import hangeul_jamo as hj
-
-# HCJ decomposition/composition
-assert hj.decompose_hcj("한글") == "ㅎㅏㄴㄱㅡㄹ"
-assert hj.compose_hcj("ㅎㅏㄴㄱㅡㄹ") == "한글"
-
-# Character checks
-assert hj.is_hangul_syllable('한') == True
-assert hj.is_hcj('ㄱ') == True
-assert hj.is_jamo_compound('ㄲ') == True
-
-# Compound jamo
-assert hj.decompose_compound('ㄲ') == ('ㄱ', 'ㄱ')
-assert hj.compose_compound(['ㅗ', 'ㅏ']) == 'ㅘ'
 ```
 
 ## API Reference
@@ -95,29 +70,3 @@ assert hj.compose_compound(['ㅗ', 'ㅏ']) == 'ㅘ'
 - `hcj_to_jamo(ch, position)` - Convert HCJ to U+11xx jamo (ㄱ → ᄀ)
   - `position`: "lead", "vowel", or "tail"
 
-## Development
-
-### Building from Source
-
-```bash
-# Clone the repository
-git clone https://github.com/gembleman/hangeul_jamo_rs.git
-cd hangeul_jamo_rs
-
-# Build Rust library
-cargo build --release
-
-# Build Python bindings
-pip install maturin
-maturin develop
-```
-
-### Running Tests
-
-```bash
-# Rust tests
-cargo test
-
-# Python tests
-pytest tests/
-```
