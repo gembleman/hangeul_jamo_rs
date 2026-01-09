@@ -1,6 +1,6 @@
 [project]
 name = "hangeul-jamo-rs"
-version = "0.1.0"
+version = "0.1.1"
 description = "A high-performance Korean Hangul syllable and jamo manipulation library with Rust backend"
 readme = "README.md"
 authors = [{ name = "hangeul_jamo_rs contributors" }]
